@@ -1,17 +1,21 @@
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_SHARED_LIBRARIES := libmlist
-LOCAL_SRC_FILES:= \
-   main.c sampler.c \
-   sampler_config.c \
-   sampler_exec.c
-
-LOCAL_MODULE := sampler
-include $(BUILD_EXECUTABLE)
-
-
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES:= mlist.c
 LOCAL_MODULE := libmlist
+LOCAL_MODULE_TAGS := optional
+LOCAL_PRELINK_MODULE := false
+LOCAL_ARM_MODE := arm
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+
+LOCAL_CFLAGS += -fPIC
+#LOCAL_CFLAGS += -DNDEBUG
+
+LOCAL_SRC_FILESS := \
+   modglobals.c \
+   initfini.c \
+   mlist.c
+
+LOCAL_SHARED_LIBRARIES :=
+
 include $(BUILD_SHARED_LIBRARY)

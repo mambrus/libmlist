@@ -3,7 +3,7 @@ PHONIES=install build all clean uninstall
 ifneq (${MAKELEVEL},0)
 
 LOCAL_MODULE := libmlist
-LOCAL_SRC_FILESS := \
+LOCAL_SRC_FILES := \
    modglobals.c \
    initfini.c \
    mlist.c
@@ -82,12 +82,12 @@ tags: $(shell ls *.[ch])
 	ctags --options=.cpatterns --exclude=@.cexclude -o tags -R *
 
 
-$(LOCAL_MODULE): Makefile $(LOCAL_SRC_FILESS:c=o)
+$(LOCAL_MODULE): Makefile $(LOCAL_SRC_FILES:c=o)
 	rm -f $(LOCAL_MODULE)
 ifdef LIB_DYNAMIC
-	gcc $(CFLAGS) $(MODULE_FLAGS) $(LOCAL_SRC_FILESS:c=o) ${LOCAL_LIBS} -o ${@}
+	gcc $(CFLAGS) $(MODULE_FLAGS) $(LOCAL_SRC_FILES:c=o) ${LOCAL_LIBS} -o ${@}
 else
-	ar rcs ${@} ${LOCAL_AR_LIBS} $(LOCAL_SRC_FILESS:c=o)
+	ar rcs ${@} ${LOCAL_AR_LIBS} $(LOCAL_SRC_FILES:c=o)
 endif
 	@echo ">>>> Build $(LOCAL_MODULE) success! <<<<"
 

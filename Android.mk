@@ -11,7 +11,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 LOCAL_CFLAGS += -fPIC
 #LOCAL_CFLAGS += -DNDEBUG
 
-LOCAL_SRC_FILESS := \
+LOCAL_SRC_FILES := \
    modglobals.c \
    initfini.c \
    mlist.c

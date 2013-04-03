@@ -29,6 +29,8 @@
 
 #define TBD_UNFINISHED "Code not finished!!! (TBD)"
 
+int dstrct_mlist(const handle_t handle);
+
 /* Administrative keeper of all lists */
 struct mlistmod_struct {
 	int isinit;           /* Is this module initialized? I.e. does mlist

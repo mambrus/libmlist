@@ -82,14 +82,14 @@ int delete_mlist(const handle_t handle) {
 	assert(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	assert(!TBD_UNFINISHED);
-	return NULL;
+	return 0;
 };
 
 int dstrct_mlist(const handle_t handle) {
 	assert(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	assert(!TBD_UNFINISHED);
-	return NULL;
+	return 0;
 };
 
 struct node *mlist_next(const handle_t handle) {

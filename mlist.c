@@ -21,18 +21,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "assert_np.h"
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 #include "local.h"
 
 static inline struct node *forward(off_t n) {
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
 static inline struct node *reverse(off_t n) {
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
@@ -42,18 +43,18 @@ int create_mlist(
 		handle_t *hndl
 ) {
 	struct listheader *L=NULL;
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	
 	if (!mlistmod_data.mlists) {
 		/* If list of lists is all empty, create also first empty node  */
 		mlistmod_data.mlists = malloc(sizeof(struct node));
-		assert(mlistmod_data.mlists);
+		assert_ext(mlistmod_data.mlists);
 		memset(mlistmod_data.mlists, 0, sizeof(struct node));
 		/* nodes prev/next left zero (NULL) on purpose */
 	} else {
 		/*Create a new empty node at tail*/
 		mlistmod_data.mlists->next = malloc(sizeof(struct node));
-		assert(mlistmod_data.mlists->next);
+		assert_ext(mlistmod_data.mlists->next);
 		memset(mlistmod_data.mlists->next, 0, sizeof(struct node));
 		mlistmod_data.mlists->next->prev = mlistmod_data.mlists;
 		/*Last one created becomes list head (i.e. order reversed)*/
@@ -61,7 +62,7 @@ int create_mlist(
 	}
 	
 	mlistmod_data.mlists->pl = malloc(sizeof(struct listheader));
-	assert(mlistmod_data.mlists->pl);
+	assert_ext(mlistmod_data.mlists->pl);
 
 	/*Cotinue initialize our list headers payload*/
 	L=mlistmod_data.mlists->pl;
@@ -79,21 +80,21 @@ int create_mlist(
 };
 
 int delete_mlist(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return 0;
 };
 
 int dstrct_mlist(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return 0;
 };
 
 struct node *mlist_next(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->p->next)
 		return(NULL);
@@ -103,7 +104,7 @@ struct node *mlist_next(const handle_t handle) {
 };
 
 struct node *mlist_prev(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->p->prev)
 		return(NULL);
@@ -113,35 +114,35 @@ struct node *mlist_prev(const handle_t handle) {
 };
 
 struct node *mlist_head(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	return L->p = L->phead;
 };
 struct node *mlist_tail(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	return L->p = L->ptail;
 };
 
 struct node *mlist_add(const handle_t handle, const LDATA *data) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->cmpfunc)
 		return mlist_add_last(handle, data);
 
 	
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	
 	
 	if (!L->nelem) {
 		/* If list is all empty, create also first empty node  */
 		L->p = malloc(sizeof(struct node));
-		assert(L->p);
+		assert_ext(L->p);
 		memset(L->p, 0, sizeof(struct node));
 		/*All 3 element pointers point at the same */
 		L->phead = L->ptail = L->p;
@@ -149,7 +150,7 @@ struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 	} else {
 		/*Create a new empty node at tail*/
 		L->ptail->next = malloc(sizeof(struct node));
-		assert(L->ptail->next);
+		assert_ext(L->ptail->next);
 		memset(L->ptail->next, 0, sizeof(struct node));
 		L->ptail->next->prev = L->ptail;
 		L->ptail = L->ptail->next;
@@ -158,65 +159,65 @@ struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 	
 	L->ptail->pl = (LDATA *)data;
 	L->nelem++;
-	assert(L != L->p->pl);
+	assert_ext(L != L->p->pl);
 	return L->ptail;
 };
 struct node *mlist_add_first(const handle_t handle, const LDATA *data) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
 struct node *mlist_del(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_del_last(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_del_first(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
 struct node *mlist_dsrct(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_dsrct_last(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_dsrct_first(const handle_t handle) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
 struct node *mlist_lseek(const handle_t handle, off_t offset, int whence) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 
 struct node *mlist_search(const handle_t handle, const LDATA *data) {
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	assert(!TBD_UNFINISHED);
+	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
  

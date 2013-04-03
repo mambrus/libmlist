@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "assert_np.h"
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
@@ -33,7 +34,7 @@ void __init mlist_init(void) {
 #ifdef INITFINI_SHOW
 	fprintf(stderr,"==========_init==========\n");
 #endif
-	assert(!mlistmod_data.isinit);
+	assert_ext(!mlistmod_data.isinit);
 	mlistmod_data.nlists = 0,
 	mlistmod_data.mlists = NULL,
 
@@ -45,7 +46,7 @@ void __fini mlist_fini(void) {
 #ifdef INITFINI_SHOW
 	fprintf(stderr,"==========_fini==========\n");
 #endif
-	assert(mlistmod_data.isinit);
+	assert_ext(mlistmod_data.isinit);
 	/* Destroy all lists if not already done. Note: will not take care of
 	 * lists containing allocated payloads. This is not a garbage collector
 	 * */
@@ -70,7 +71,7 @@ void __fini mlist_fini(void) {
 				mlistmod_data.mlists->pl , tlist
 			);
 			rc=dstrct_mlist((handle_t)tlist);
-			assert(rc==0);
+			assert_ext(rc==0);
 		}
 
 		tnext=mlistmod_data.mlists->next;

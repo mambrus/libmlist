@@ -30,7 +30,7 @@
 /* "Constructor" / "Destructor" */
 /*----------------------------------------------------------------------*/
 /* Module initializers */
-void __init mlist_init(void) {
+void __init __mlist_init(void) {
 #ifdef INITFINI_SHOW
 	fprintf(stderr,"==========_init==========\n");
 #endif
@@ -41,7 +41,7 @@ void __init mlist_init(void) {
 	mlistmod_data.isinit=1;
 }
 
-void __fini mlist_fini(void) {
+void __fini __mlist_fini(void) {
 	struct node *tnext;   /* Needed because race could happen */
 #ifdef INITFINI_SHOW
 	fprintf(stderr,"==========_fini==========\n");
@@ -81,4 +81,17 @@ void __fini mlist_fini(void) {
 
 	mlistmod_data.nlists = 0;
 	mlistmod_data.isinit=0;
+}
+
+
+int mlist_settings(int argc, char **argv) {
+	return 0;
+}
+
+int mlist_init() {
+	return 0;
+}
+
+int mlist_fini() {
+	return 0;
 }

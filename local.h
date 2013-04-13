@@ -20,8 +20,6 @@
 
 #ifndef local_h
 #define local_h
-
-#define LDATA struct listheader
 #include <mlist.h>
 
 #define __init __attribute__((constructor))
@@ -43,6 +41,7 @@ struct mlistmod_struct {
 /* Indicate to others that someone is keeping this as global module data
  * (easier to find with GDB) */
 extern struct mlistmod_struct mlistmod_data;
+extern struct mlistmod_settings mlistmod_settings;
 
 /* Data of this struct is the payload for the mlist variable in mlistmod_struct.
  * It's the administrative keeper of each list. */

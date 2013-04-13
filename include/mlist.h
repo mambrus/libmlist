@@ -39,6 +39,19 @@ typedef uintptr_t handle_t;
 #define NULL ((void*)0)
 #endif
 
+/* Settings */
+struct mlistmod_settings {
+	int isinit;
+	int debuglevel;		  /* Affects how much extra information is printed
+							 for debugging */
+	int verbose;		  /* Additional verbosity */
+};
+
+/* Module overall setting/start/stop/behaviour */
+int mlist_settings(int argc, char **argv);
+int mlist_init();
+int mlist_fini();
+
 
 struct node {
 	struct node* prev;

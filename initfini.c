@@ -32,7 +32,8 @@
 /* Module initializers */
 void __init __mlist_init(void) {
 #ifdef INITFINI_SHOW
-	fprintf(stderr,"==========_init==========\n");
+	fprintf(stderr,">>> Running module _init in ["__FILE__"]\n"
+			">>> using CTORS/DTORS mechanism ====\n");
 #endif
 	assert_ext(!mlistmod_data.isinit);
 	mlistmod_data.nlists = 0,
@@ -44,7 +45,8 @@ void __init __mlist_init(void) {
 void __fini __mlist_fini(void) {
 	struct node *tnext;   /* Needed because race could happen */
 #ifdef INITFINI_SHOW
-	fprintf(stderr,"==========_fini==========\n");
+	fprintf(stderr,">>> Running module _fini in ["__FILE__"]\n"
+			">>> using CTORS/DTORS mechanism\n");
 #endif
 	assert_ext(mlistmod_data.isinit);
 	/* Destroy all lists if not already done. Note: will not take care of

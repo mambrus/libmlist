@@ -9,8 +9,13 @@ LOCAL_ARM_MODE := arm
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 
 LOCAL_CFLAGS += -fPIC
+
+#Enable when code finalized
 #LOCAL_CFLAGS += -DNDEBUG
-LOCAL_CFLAGS += -DINITFINI_SHOW
+
+#Enable only to check if a new target supports CTORS/DTORS
+#mechanism (typically only once)
+#LOCAL_CFLAGS += -DINITFINI_SHOW
 
 LOCAL_SRC_FILES := \
    modglobals.c \

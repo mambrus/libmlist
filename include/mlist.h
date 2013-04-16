@@ -48,7 +48,6 @@ struct mlistmod_settings {
 };
 
 /* Module overall setting/start/stop/behaviour */
-int mlist_settings(int argc, char **argv);
 int mlist_init();
 int mlist_fini();
 

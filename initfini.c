@@ -84,10 +84,6 @@ void __fini __mlist_fini(void) {
 }
 
 
-int mlist_settings(int argc, char **argv) {
-	return 0;
-}
-
 int mlist_init() {
 	return 0;
 }

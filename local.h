@@ -18,8 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef local_h
-#define local_h
+#ifndef libmlist_local_h
+#define libmlist_local_h
 #include <mlist.h>
 
 #define __init __attribute__((constructor))
@@ -58,5 +58,5 @@ struct listheader {
 	struct node *ptail;   /* List-end */
 };
 
-#endif /* local_h */
+#endif /* libmlist_local_h */
 

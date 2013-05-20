@@ -30,6 +30,6 @@ struct mlistmod_struct mlistmod_data = {
 
 struct mlistmod_settings mlistmod_settings = {
 	.isinit = 0,
-	.debuglevel = 0,
+	.debuglevel = -1,
 	.verbose = 0,
 };

@@ -58,7 +58,7 @@ ${LOCAL_SUBMODULES}:
 clean:
 	$(CLEAN_MODS)
 	rm -f *.o
-	rm -f $(LOCAL_MODULE)
+	rm -f lib/*.so lib/*.a
 	rm -f tags
 
 install: ${INSTALLDIR}/${LOCAL_MODULE} ${INSTALLDIR}/${EXHEADERS}

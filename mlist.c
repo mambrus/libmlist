@@ -37,7 +37,9 @@ static inline struct node *reverse(off_t n) {
 	return NULL;
 };
 
-int create_mlist(
+/* Operations list level                            */
+/* ================================================ */
+int mlist_opencreate(
 		int sz,
 		int (*cmpfunc)(LDATA *lval, LDATA *rval),
 		handle_t *hndl
@@ -46,7 +48,7 @@ int create_mlist(
 	assert_ext(mlistmod_data.isinit);
 
 	if (!mlistmod_data.mlists) {
-		/* If list of lists is all empty, create also first empty node  */
+		/* If list of lists is all empty, create also first empty node */
 		mlistmod_data.mlists = malloc(sizeof(struct node));
 		assert_ext(mlistmod_data.mlists);
 		memset(mlistmod_data.mlists, 0, sizeof(struct node));
@@ -69,6 +71,8 @@ int create_mlist(
 	memset(L, 0, sizeof(struct listheader));
 	/* Not really needed to to the following 3*/
 	/* L->p       = mlistmod_data.mlists; WRONG*/
+	L->nr_links= 0;
+	L->owner   = NULL;
 	L->p       = NULL;
 	L->phead   = NULL;
 	L->ptail   = NULL;
@@ -81,21 +85,41 @@ int create_mlist(
 
 /* Create a copy of one list-header. This can be used to iterate (seek)
  * over. Note that the content (file) is still the same, and content is
- * still not thread safe but.
- *
- * TODO: Have a marker with number of dups. To be used when destroying list
- * so that as long as there are users, list will not be destroyed. */
-int dup_mlist(handle_t *new_hndl, handle_t orig_hndl) {
+ * still not thread safe (like any ordinary file, content is not thread
+ * safe).
+ * */
+int mlist_dup(handle_t *new_hndl, handle_t orig_hndl) {
 	struct listheader *L;
 
 	L = malloc(sizeof(struct listheader));
 	memcpy(L,(void*)orig_hndl,sizeof(struct listheader));
 
+	((struct listheader*)orig_hndl)->nr_links++;
+	L->owner = ((struct listheader*)orig_hndl);
+	L->nr_links = 0;
+
 	*new_hndl = (handle_t)L;
 	return 0;
 }
 
-int delete_mlist(const handle_t handle) {
+/* Closes (destroys) a handle */
+int mlist_close(const handle_t handle) {
+	assert_ext(mlistmod_data.isinit);
+	struct listheader *L=(struct listheader *)handle;
+	if (L->nr_links==0) {
+		/* Freeing only meta-data */
+		((struct listheader*)L->owner)->nr_links--;
+		free(L);
+		return(0);
+	}
+	/* For the root handle, more sophisticated stuff is needed */
+	assert_ext(!TBD_UNFINISHED);
+	return 0;
+};
+
+/* Operations on node level                         */
+/* ================================================ */
+int mlist_delete(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
@@ -116,6 +140,16 @@ struct node *mlist_next(const handle_t handle) {
 		return(NULL);
 
 	L->p = L->p->next;
+	return(L->p);
+};
+
+/*Returns node at current position */
+struct node *mlist_curr(const handle_t handle) {
+	assert_ext(mlistmod_data.isinit);
+	struct listheader *L=(struct listheader *)handle;
+	if (!L->p)
+		return(NULL);
+
 	return(L->p);
 };
 

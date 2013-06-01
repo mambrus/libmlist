@@ -59,19 +59,22 @@ struct node {
 };
 
 /* Create a new mlist with payload size sz in hndl. Returns error code */
-int create_mlist(
+int mlist_opencreate(
 		int sz,
 		int (*cmpfunc)(LDATA *lval, LDATA *rval),
 		handle_t *hndl);
 
+/* Deletes a list handle */
+int mlist_close(handle_t hndl);
+
 /* Dup the list. Note this works as fdup, i.e. it's only the hande that's
   duplicated. The content is still the same (i.e. not a copy).*/
-int dup_mlist(
+int mlist_dup(
 		handle_t *new_hndl,
 		handle_t orig_hndl);
 
 /* Deletes mlist. Returns error code */
-int delete_mlist(const handle_t handle);
+int mlist_create(const handle_t handle);
 
 /* Simple iterators */
 struct node *mlist_next(const handle_t handle);
@@ -80,6 +83,7 @@ struct node *mlist_prev(const handle_t handle);
 /* Go-to's */
 struct node *mlist_head(const handle_t handle);
 struct node *mlist_tail(const handle_t handle);
+struct node *mlist_curr(const handle_t handle);
 
 /* Node insert:
  * Note: Node will be allocated on heap and inserted in list at iterator

@@ -50,6 +50,10 @@ struct listheader {
 	off_t o;              /* Offset from start (in jumps jumps) */
 	int nelem;            /* Current size of this list */
 	int pl_sz;            /* pay-load size */
+	struct listheader *owner; /* If this is a dup, will point to the
+						     original*/
+	int nr_links;         /* if duped, will be larger than 0, note dups can
+							 be duped*/
 
 	/* Caller provided function used to search & sort list. Can be NULL if
 	 * search and sort is not supported */

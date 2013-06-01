@@ -44,7 +44,7 @@ int create_mlist(
 ) {
 	struct listheader *L=NULL;
 	assert_ext(mlistmod_data.isinit);
-	
+
 	if (!mlistmod_data.mlists) {
 		/* If list of lists is all empty, create also first empty node  */
 		mlistmod_data.mlists = malloc(sizeof(struct node));
@@ -60,7 +60,7 @@ int create_mlist(
 		/*Last one created becomes list head (i.e. order reversed)*/
 		mlistmod_data.mlists = mlistmod_data.mlists->next;
 	}
-	
+
 	mlistmod_data.mlists->pl = malloc(sizeof(struct listheader));
 	assert_ext(mlistmod_data.mlists->pl);
 
@@ -78,6 +78,22 @@ int create_mlist(
 	*hndl=(handle_t)L;
 	return 0;
 };
+
+/* Create a copy of one list-header. This can be used to iterate (seek)
+ * over. Note that the content (file) is still the same, and content is
+ * still not thread safe but.
+ *
+ * TODO: Have a marker with number of dups. To be used when destroying list
+ * so that as long as there are users, list will not be destroyed. */
+int dup_mlist(handle_t *new_hndl, handle_t orig_hndl) {
+	struct listheader *L;
+
+	L = malloc(sizeof(struct listheader));
+	memcpy(L,(void*)orig_hndl,sizeof(struct listheader));
+
+	*new_hndl = (handle_t)L;
+	return 0;
+}
 
 int delete_mlist(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
@@ -130,15 +146,15 @@ struct node *mlist_add(const handle_t handle, const LDATA *data) {
 	if (!L->cmpfunc)
 		return mlist_add_last(handle, data);
 
-	
+
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 	assert_ext(mlistmod_data.isinit);
 	struct listheader *L=(struct listheader *)handle;
-	
-	
+
+
 	if (!L->nelem) {
 		/* If list is all empty, create also first empty node  */
 		L->p = malloc(sizeof(struct node));
@@ -156,7 +172,7 @@ struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 		L->ptail = L->ptail->next;
 		/* Note. No need to save/restore list header temporary as it's intact. */
 	}
-	
+
 	L->ptail->pl = (LDATA *)data;
 	L->nelem++;
 	assert_ext(L != L->p->pl);
@@ -220,4 +236,4 @@ struct node *mlist_search(const handle_t handle, const LDATA *data) {
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
- 
+

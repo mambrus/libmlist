@@ -64,6 +64,12 @@ int create_mlist(
 		int (*cmpfunc)(LDATA *lval, LDATA *rval),
 		handle_t *hndl);
 
+/* Dup the list. Note this works as fdup, i.e. it's only the hande that's
+  duplicated. The content is still the same (i.e. not a copy).*/
+int dup_mlist(
+		handle_t *new_hndl,
+		handle_t orig_hndl);
+
 /* Deletes mlist. Returns error code */
 int delete_mlist(const handle_t handle);
 

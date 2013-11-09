@@ -90,7 +90,9 @@ int mlist_opencreate(
  * */
 int mlist_dup(handle_t *new_hndl, handle_t orig_hndl) {
 	struct listheader *L;
+	assert_ext(mlistmod_data.isinit);
 
+	assert_ext(orig_hndl);
 	L = malloc(sizeof(struct listheader));
 	memcpy(L,(void*)orig_hndl,sizeof(struct listheader));
 
@@ -105,6 +107,8 @@ int mlist_dup(handle_t *new_hndl, handle_t orig_hndl) {
 /* Closes (destroys) a handle */
 int mlist_close(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	if (L->nr_links==0) {
 		/* Freeing only meta-data */
@@ -121,6 +125,8 @@ int mlist_close(const handle_t handle) {
 /* ================================================ */
 int mlist_delete(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return 0;
@@ -128,6 +134,8 @@ int mlist_delete(const handle_t handle) {
 
 int dstrct_mlist(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return 0;
@@ -135,6 +143,8 @@ int dstrct_mlist(const handle_t handle) {
 
 struct node *mlist_next(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->p->next)
 		return(NULL);
@@ -146,6 +156,8 @@ struct node *mlist_next(const handle_t handle) {
 /*Returns node at current position */
 struct node *mlist_curr(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->p)
 		return(NULL);
@@ -155,6 +167,8 @@ struct node *mlist_curr(const handle_t handle) {
 
 struct node *mlist_prev(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->p->prev)
 		return(NULL);
@@ -165,17 +179,23 @@ struct node *mlist_prev(const handle_t handle) {
 
 struct node *mlist_head(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	return L->p = L->phead;
 };
 struct node *mlist_tail(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	return L->p = L->ptail;
 };
 
 struct node *mlist_add(const handle_t handle, const LDATA *data) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	if (!L->cmpfunc)
 		return mlist_add_last(handle, data);
@@ -186,8 +206,9 @@ struct node *mlist_add(const handle_t handle, const LDATA *data) {
 };
 struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 	assert_ext(mlistmod_data.isinit);
-	struct listheader *L=(struct listheader *)handle;
+	assert_ext(handle && "invalid or not initialized");
 
+	struct listheader *L=(struct listheader *)handle;
 
 	if (!L->nelem) {
 		/* If list is all empty, create also first empty node  */
@@ -214,6 +235,8 @@ struct node *mlist_add_last(const handle_t handle, const LDATA *data) {
 };
 struct node *mlist_add_first(const handle_t handle, const LDATA *data) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
@@ -221,18 +244,24 @@ struct node *mlist_add_first(const handle_t handle, const LDATA *data) {
 
 struct node *mlist_del(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_del_last(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_del_first(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
@@ -240,18 +269,24 @@ struct node *mlist_del_first(const handle_t handle) {
 
 struct node *mlist_dsrct(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_dsrct_last(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
 };
 struct node *mlist_dsrct_first(const handle_t handle) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
@@ -259,6 +294,8 @@ struct node *mlist_dsrct_first(const handle_t handle) {
 
 struct node *mlist_lseek(const handle_t handle, off_t offset, int whence) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;
@@ -266,6 +303,8 @@ struct node *mlist_lseek(const handle_t handle, off_t offset, int whence) {
 
 struct node *mlist_search(const handle_t handle, const LDATA *data) {
 	assert_ext(mlistmod_data.isinit);
+	assert_ext(handle && "invalid or not initialized");
+
 	struct listheader *L=(struct listheader *)handle;
 	assert_ext(!TBD_UNFINISHED);
 	return NULL;

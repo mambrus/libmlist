@@ -12,7 +12,13 @@ LOCAL_LIBS :=
 
 LOCAL_CFLAGS := -fPIC
 #LOCAL_CFLAGS += -DNDEBUG
-LOCAL_C_INCLUDES += ${HOME}/include
+
+LOCAL_C_INCLUDES += include
+ifeq (${LOCAL_BUILD},yes)
+    LOCAL_C_INCLUDES += include
+else
+    LOCAL_INCLUDES_USED=no
+endif
 LOCAL_LDLIBS += ${HOME}/lib
 LOCAL_SUBMODULES :=
 
@@ -25,7 +31,13 @@ ifeq (${WHOAMI},root)
 else
     INSTALLDIR=${HOME}
 endif
-EXHEADERS=$(shell ls include/*.h)
+ifeq (${LOCAL_INCLUDES_USED},no)
+	LOCAL_C_INCLUDES += ${INSTALLDIR}/include
+endif
+EXHEADERS_DIR=include
+EXHEADERS=$(shell ls ${EXHEADERS_DIR}/*.h | sed -e 's/^${EXHEADERS_DIR}\///')
+INSTALLED_EXHEADERS := $(patsubst %, ${INSTALLDIR}/include/%, ${EXHEADERS})
+UNINSTALLED_EXHEADERS := $(patsubst %, ${INSTALLDIR}/include/%, ${EXHEADERS})
 LOCAL_C_INCLUDES := $(addprefix -I , ${LOCAL_C_INCLUDES})
 LOCAL_LDLIBS:= $(addprefix -L, ${LOCAL_LDLIBS})
 LOCAL_LIBS:= ${LOCAL_LDLIBS} $(addprefix -l, ${LOCAL_LIBS})
@@ -57,9 +69,8 @@ LOCAL_MODULE := lib/${LOCAL_MODULE}
 all: build
 build: tags $(LOCAL_MODULE)
 
-
 ${LOCAL_SUBMODULES}:
-	$(MAKE) -e -k -C $@ install
+	$(MAKE) -e -k -C $@
 
 clean:
 	$(CLEAN_MODS)
@@ -69,26 +80,25 @@ clean:
 	rm -f *.d
 	rm -f tags
 
-install: all ${INSTALLDIR}/${LOCAL_MODULE} ${INSTALLDIR}/${EXHEADERS}
+install: all ${INSTALLDIR}/${LOCAL_MODULE} ${INSTALLED_EXHEADERS}
 
 uninstall:
 	$(UNINST_MODS)
 	rm -rf ${INSTALLDIR}/${LOCAL_MODULE}
-	bash -c '${INSTALLDIR}; rm ${EXHEADERS}'
+	rm -rf ${INSTALLED_EXHEADERS}
 
 ${INSTALLDIR}/${LOCAL_MODULE}: ${EXLIBS} ${LOCAL_MODULE}
 	mkdir -p ${INSTALLDIR}/lib
 	rm -f ${INSTALLDIR}/${LOCAL_MODULE}
 	cp $(LOCAL_MODULE) ${INSTALLDIR}/${LOCAL_MODULE}
 
-${INSTALLDIR}/${EXHEADERS}: ${EXHEADERS}
-	mkdir -p $(shell dirname ${@})
-	rm -f ${@}
-	cp include/$(shell basename ${@}) ${@}
+${INSTALLED_EXHEADERS}: ${UNINSTALLED_EXHEADERS}
+	mkdir -p ${INSTALLDIR}/include
+	rm -f ${INSTALLDIR}/include/$(shell basename ${@})
+	cp ${EXHEADERS_DIR}/$(shell basename ${@}) ${INSTALLDIR}/include/$(shell basename ${@})
 
 tags: $(shell ls *.[ch])
 	ctags --options=.cpatterns --exclude=@.cexclude -o tags -R *
-
 
 $(LOCAL_MODULE): Makefile $(LOCAL_SRC_FILES:c=o)
 	rm -f $(LOCAL_MODULE)
@@ -144,4 +154,3 @@ else
 endif
 
 endif
-

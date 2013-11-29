@@ -57,7 +57,7 @@ static inline void assertfail(char *assertstr, char *filestr, int line) {
 		fprintf(stderr,"Abort failed. Null-pointer assignement for coredump \n");
 		/* Should never return, but just in case lib is broken (Android?)
 		 * make a deliberate null pointer assignment */
-		(int *)NULL = 1;
+		*((int *)NULL) = 1;
 }
 
 /* Do the stuff, just ignore acting on the result. */

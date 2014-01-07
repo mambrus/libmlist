@@ -66,6 +66,12 @@ else
 endif
 
 LOCAL_MODULE := lib/${LOCAL_MODULE}
+ifeq ($(LOCAL_CLANG),)
+	CC=gcc
+else
+	CC=clang
+endif
+
 all: build
 build: tags $(LOCAL_MODULE)
 
@@ -103,7 +109,7 @@ tags: $(shell ls *.[ch])
 $(LOCAL_MODULE): Makefile $(LOCAL_SRC_FILES:c=o)
 	rm -f $(LOCAL_MODULE)
 ifdef LIB_DYNAMIC
-	gcc $(CFLAGS) $(MODULE_FLAGS) $(LOCAL_SRC_FILES:c=o) ${LOCAL_LIBS} -o ${@}
+	${CC} $(CFLAGS) $(MODULE_FLAGS) $(LOCAL_SRC_FILES:c=o) ${LOCAL_LIBS} -o ${@}
 else
 	ar rcs ${@} ${LOCAL_AR_LIBS} $(LOCAL_SRC_FILES:c=o)
 endif
@@ -113,13 +119,13 @@ endif
 %.o: %.c
 
 %.tmp: %.c Makefile
-	gcc -MM $(CFLAGS) ${@:tmp=c} > ${@}
+	${CC} -MM $(CFLAGS) ${@:tmp=c} > ${@}
 
 %.d: %.tmp
 	cat ${@:d=tmp} | sed  -E 's/$*.c/$*.c $@/' > ${@}
 
 %.o: %.d Makefile
-	gcc -c $(CFLAGS) ${@:o=c} -o $@
+	${CC} -c $(CFLAGS) ${@:o=c} -o $@
 
 
 include $(FOUND_CDEPS)

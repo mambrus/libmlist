@@ -83,4 +83,3 @@ accepts returning with code, and that the code means error */
 )
 #endif
 #endif /* assert_np_h */
-

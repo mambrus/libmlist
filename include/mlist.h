@@ -112,4 +112,3 @@ struct node *mlist_lseek(const handle_t handle, off_t offset, int whence);
 struct node *mlist_search(const handle_t handle, const LDATA *data);
 
 #endif /* list_h */
-

@@ -105,4 +105,4 @@ struct node *mlist_dstrct_first(const handle_t handle);
 
 struct node *mlist_lseek(const handle_t handle, off_t offset, int whence);
 
-#endif                          /* list_h */
+#endif                          /* mlist_h */

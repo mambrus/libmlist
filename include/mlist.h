@@ -139,4 +139,28 @@ static inline LDATA *mdata_tail(const handle_t handle)
     return (n = mlist_tail(handle)) ? n->pl : NULL;
 };
 
+/*----------------------------------------------------------------------*/
+/* Convenience macros                                                   */
+/*----------------------------------------------------------------------*/
+
+/* Iteration pattern is so common that having macros to aid makes sense as
+ * it makes code both more compact and readable */
+
+/* Main iteration macro */
+#define ITERATE( LIST ) \
+for (mlist_head( LIST ); \
+     mlist_curr( LIST ); \
+     mlist_next( LIST ))
+
+/* Expose *payload* _REF_erence of _C_urrent position. To be used in
+ * conjunction with ITERATE.
+ *
+ * NOTE: By redefining LDATA to the type stored prior using this macro,
+ * you can get access of payloads data seemingly without casting */
+#define CREF( LIST ) ((LDATA *)(mdata_curr( LIST )))
+
+/* Same as CREF, but returns de-referred payload. This aids in
+ * otherwise tricky casting. */
+#define CDATA( LIST ) (*(LDATA *)(mdata_curr( LIST )))
+
 #endif                          /* mlist_h */

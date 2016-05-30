@@ -31,7 +31,7 @@
 /* Module initializers */
 void __init __mlist_init(void)
 {
-#ifdef INITFINI_SHOW
+#ifdef ENABLE_INITFINI_SHOWEXEC
     fprintf(stderr, ">>> Running module _init in [" __FILE__ "]\n"
             ">>> using CTORS/DTORS mechanism ====\n");
 #endif
@@ -43,7 +43,7 @@ void __init __mlist_init(void)
 void __fini __mlist_fini(void)
 {
     struct node *tnext;         /* Needed because race could happen */
-#ifdef INITFINI_SHOW
+#ifdef ENABLE_INITFINI_SHOWEXEC
     fprintf(stderr, ">>> Running module _fini in [" __FILE__ "]\n"
             ">>> using CTORS/DTORS mechanism\n");
 #endif

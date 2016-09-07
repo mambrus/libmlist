@@ -31,13 +31,13 @@ static inline struct node *forward(off_t n)
 {
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 static inline struct node *reverse(off_t n)
 {
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 /* Frees payloads memory and node itself, removes list from the
    module-global list, inerts new sentinels if needed and lastly free the
@@ -117,7 +117,7 @@ int mlist_opencreate(int sz,
     mlistmod_data.nlists++;
     *hndl = (handle_t)L;
     return 0;
-};
+}
 
 /* Create a copy of one list-header. This can be used to iterate (seek)
  * over. Note that the content (file) is still the same, and content is
@@ -165,7 +165,7 @@ int mlist_close(const handle_t handle)
     }
     /* Note that for the root handle, more sophisticated stuff is needed */
     return 0;
-};
+}
 
 /* Operations on node level                         */
 /* ================================================ */
@@ -179,7 +179,7 @@ int mlist_delete(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return 0;
-};
+}
 
 int dstrct_mlist(const handle_t handle)
 {
@@ -191,7 +191,7 @@ int dstrct_mlist(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return 0;
-};
+}
 
 struct node *mlist_next(const handle_t handle)
 {
@@ -202,7 +202,7 @@ struct node *mlist_next(const handle_t handle)
 
     L->p = L->p->next;
     return (L->p);
-};
+}
 
 struct node *mlist_curr(const handle_t handle)
 {
@@ -212,7 +212,7 @@ struct node *mlist_curr(const handle_t handle)
     struct listheader *L = (struct listheader *)handle;
 
     return (L->p);
-};
+}
 
 struct node *mlist_prev(const handle_t handle)
 {
@@ -223,7 +223,7 @@ struct node *mlist_prev(const handle_t handle)
 
     L->p = L->p->prev;
     return (L->p);
-};
+}
 
 struct node *mlist_head(const handle_t handle)
 {
@@ -232,7 +232,7 @@ struct node *mlist_head(const handle_t handle)
 
     struct listheader *L = (struct listheader *)handle;
     return L->p = L->phead;
-};
+}
 
 struct node *mlist_tail(const handle_t handle)
 {
@@ -241,7 +241,7 @@ struct node *mlist_tail(const handle_t handle)
 
     struct listheader *L = (struct listheader *)handle;
     return L->p = L->ptail;
-};
+}
 
 struct node *mlist_add(const handle_t handle, const LDATA *data)
 {
@@ -254,7 +254,7 @@ struct node *mlist_add(const handle_t handle, const LDATA *data)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_add_last(const handle_t handle, const LDATA *data)
 {
@@ -290,7 +290,7 @@ struct node *mlist_add_last(const handle_t handle, const LDATA *data)
      * list can be both iterated and added too at the same time concurrently */
     L->p = L->ptail;
     return L->p;
-};
+}
 
 struct node *mlist_add_first(const handle_t handle, const LDATA *data)
 {
@@ -302,7 +302,7 @@ struct node *mlist_add_first(const handle_t handle, const LDATA *data)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_del(const handle_t handle)
 {
@@ -314,7 +314,7 @@ struct node *mlist_del(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_del_last(const handle_t handle)
 {
@@ -326,7 +326,7 @@ struct node *mlist_del_last(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_del_first(const handle_t handle)
 {
@@ -338,7 +338,7 @@ struct node *mlist_del_first(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_dsrct(const handle_t handle)
 {
@@ -350,7 +350,7 @@ struct node *mlist_dsrct(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_dsrct_last(const handle_t handle)
 {
@@ -362,7 +362,7 @@ struct node *mlist_dsrct_last(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_dsrct_first(const handle_t handle)
 {
@@ -374,7 +374,7 @@ struct node *mlist_dsrct_first(const handle_t handle)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_lseek(const handle_t handle, off_t offset, int whence)
 {
@@ -386,7 +386,7 @@ struct node *mlist_lseek(const handle_t handle, off_t offset, int whence)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 struct node *mlist_search(const handle_t handle, const LDATA *data)
 {
@@ -398,7 +398,7 @@ struct node *mlist_search(const handle_t handle, const LDATA *data)
 
     assert_ext(!TBD_UNFINISHED);
     return NULL;
-};
+}
 
 /*
 struct node *mlist_curr(const handle_t handle)

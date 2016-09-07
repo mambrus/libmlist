@@ -125,19 +125,19 @@ static inline LDATA *mdata_curr(const handle_t handle)
 {
     struct node *n;
     return (n = mlist_curr(handle)) ? n->pl : NULL;
-};
+}
 
 static inline LDATA *mdata_head(const handle_t handle)
 {
     struct node *n;
     return (n = mlist_head(handle)) ? n->pl : NULL;
-};
+}
 
 static inline LDATA *mdata_tail(const handle_t handle)
 {
     struct node *n;
     return (n = mlist_tail(handle)) ? n->pl : NULL;
-};
+}
 
 /*----------------------------------------------------------------------*/
 /* Convenience macros                                                   */

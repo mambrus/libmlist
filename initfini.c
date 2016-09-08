@@ -56,7 +56,7 @@ void __fini __mlist_fini(void)
          mlistmod_data.nlists--, mlistmod_data.mlists = tnext) {
         fprintf(stderr,
                 "WARNING: Destructing un-freed list [%p]. "
-                "Possible leak\n", mlistmod_data.mlists);
+                "Possible leak\n", (void *)(mlistmod_data.mlists));
         if ((struct listheader *)(mlistmod_data.mlists->pl)) {
             struct node *tlist =
                 ((struct listheader *)(mlistmod_data.mlists->pl))->phead;
@@ -64,7 +64,8 @@ void __fini __mlist_fini(void)
 
             fprintf(stderr,
                     "WARNING: Destructing un-freed pay-load [%p]. "
-                    "List id: [%p]\n", mlistmod_data.mlists->pl, tlist);
+                    "List id: [%p]\n", (void *)(mlistmod_data.mlists->pl),
+                    (void *)(tlist));
             rc = dstrct_mlist((handle_t)tlist);
             assert_ext(rc == 0);
         }
